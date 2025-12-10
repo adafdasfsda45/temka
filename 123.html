@@ -981,5 +981,27 @@
             }
         });
     </script>
+    <!-- Theme Toggle Button -->
+    <button id="themeBtn" style="position: fixed; bottom: 20px; right: 20px; padding: 10px 15px; background: #0066cc; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 1000;">🌙 Dark Mode</button>
+    
+    <script>
+        const themeBtn = document.getElementById('themeBtn');
+        let isDarkMode = true;
+        
+        themeBtn.addEventListener('click', function() {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                document.body.style.background = '#1e1e1e';
+                document.body.style.color = '#d4d4d4';
+                themeBtn.style.background = '#0066cc';
+                themeBtn.textContent = '🌙 Dark Mode';
+            } else {
+                document.body.style.background = '#ffffff';
+                document.body.style.color = '#333333';
+                themeBtn.style.background = '#333333';
+                themeBtn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
 </body>
 </html>
