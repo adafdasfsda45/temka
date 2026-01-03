@@ -87,7 +87,7 @@ function OnEvent(event, arg)
             multiplier = 1
         else
             -- ОКРУГЛЯЕМ ХУЙНЮ!!
-            multiplier = math.floor(base_sens / which_sens + 0.5)
+            multiplier = base_sens / which_sens
             if multiplier < 1 then multiplier = 1 end
         end
     else
