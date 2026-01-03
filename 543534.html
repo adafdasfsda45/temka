@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAFFCLIENT // Compiling...</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0c0c;--win:#131316;--brd:#171523;--acc:#9b0fff;--glow:rgba(155,15,255,0.4);--txt:#fff;--dim:#5a5c64;--err:#ff3232}
+body,html{margin:0;padding:0;width:100%;height:100%;background:var(--bg);font-family:'JetBrains Mono',monospace;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--txt);user-select:none;-webkit-user-select:none}
+#bg-c{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.4}
+.l-win{position:relative;z-index:10;width:800px;height:500px;background:var(--win);border:1px solid var(--brd);border-radius:6px;box-shadow:0 0 30px #000,0 0 10px rgba(155,15,255,0.05);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:scale(0.95);animation:fi 0.8s cubic-bezier(0.16,1,0.3,1) forwards}
+@keyframes fi{to{opacity:1;transform:scale(1)}}
+.w-head{height:40px;border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;padding:0 15px;background:rgba(12,12,12,0.5)}
+.w-ttl{font-size:13px;font-weight:600;letter-spacing:0.5px;color:var(--acc);text-shadow:0 0 5px var(--glow)}
+.w-ctrl{display:flex;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--brd)}
+.dot.a{background:var(--acc);box-shadow:0 0 5px var(--acc)}
+.w-cnt{flex:1;padding:20px;display:flex;flex-direction:column;position:relative}
+.c-box{flex:1;overflow:hidden;font-size:12px;line-height:1.8;color:var(--dim);margin-bottom:20px;display:flex;flex-direction:column;justify-content:flex-end}
+.l-ln{display:block}
+.l-px{color:#444;margin-right:8px}
+.l-i{color:#fff}.l-w{color:#e686e0}.l-e{color:var(--err)}.l-s{color:var(--acc)}
+.i-area{height:0;overflow:hidden;transition:height 0.5s ease;border-top:1px solid transparent}
+.i-area.s{height:100px;border-top:1px solid var(--brd);padding-top:15px}
+.i-grp{display:flex;align-items:center;margin-bottom:10px;background:#0f0f11;border:1px solid var(--brd);border-radius:4px;padding:8px 12px;transition:0.2s}
+.i-grp:focus-within{border-color:var(--acc);box-shadow:0 0 8px var(--glow)}
+.i-lbl{color:var(--acc);font-weight:bold;margin-right:10px;font-size:12px}
+input{background:0 0;border:0;outline:0;color:#fff;font-family:inherit;font-size:13px;width:100%}
+input::placeholder{color:#333}
+.p-trk{position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--brd)}
+.p-fill{width:0%;height:100%;background:var(--acc);box-shadow:0 0 10px var(--acc);transition:width 0.2s}
+.glitch{animation:sh 0.4s cubic-bezier(.36,.07,.19,.97) both;border-color:var(--err)!important}
+@keyframes sh{10%,90%{transform:translate3d(-1px,0,0)}20%,80%{transform:translate3d(2px,0,0)}30%,50%,70%{transform:translate3d(-4px,0,0)}40%,60%{transform:translate3d(4px,0,0)}}
+</style>
+</head>
+<body>
+<canvas id="bg-c"></canvas>
+<div class="l-win" id="w">
+<div class="w-head"><div class="w-ttl">BAFFCLIENT // Compiling...</div><div class="w-ctrl"><div class="dot"></div><div class="dot a"></div></div></div>
+<div class="w-cnt"><div class="c-box" id="c"></div><div class="i-area" id="f"><div class="i-grp"><span class="i-lbl">USER_</span><input type="text" id="iu" placeholder="authentication required" autocomplete="off"></div><div class="i-grp"><span class="i-lbl">PASS_</span><input type="password" id="ip" placeholder="secure token" autocomplete="off"></div></div></div>
+<div class="p-trk"><div class="p-fill" id="p"></div></div>
+</div>
+<script>
+// --- SECURITY: ANTI-INSPECT MODULE ---
+!function(){const e=e=>{e.preventDefault(),e.stopPropagation(),e.returnValue=!1};window.addEventListener("contextmenu",e,!1),window.addEventListener("keydown",t=>{if(123===t.keyCode||t.ctrlKey&&t.shiftKey&&(73===t.keyCode||74===t.keyCode||67===t.keyCode)||t.ctrlKey&&85===t.keyCode||t.ctrlKey&&83===t.keyCode)return e(t),!1},!1);setInterval(()=>{const e=new Date;debugger;new Date-e>100&&document.body.remove()},500)}();
+
+// --- VISUALS ---
+const cvs=document.getElementById('bg-c'),ctx=cvs.getContext('2d');let w,h;const pts=[];
+function rsz(){w=cvs.width=window.innerWidth;h=cvs.height=window.innerHeight}window.addEventListener('resize',rsz);rsz();
+class P{constructor(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-.5)*.5;this.vy=(Math.random()-.5)*.5;this.s=Math.random()*2}u(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}d(){ctx.fillStyle='#9b0fff';ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill()}}
+for(let i=0;i<50;i++)pts.push(new P);
+function anm(){ctx.fillStyle='#0c0c0c';ctx.fillRect(0,0,w,h);pts.forEach(p=>{p.u();p.d();pts.forEach(p2=>{let dx=p.x-p2.x,dy=p.y-p2.y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){ctx.strokeStyle=`rgba(155,15,255,${1-d/120})`;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);ctx.stroke()}})});requestAnimationFrame(anm)}anm();
+
+// --- LOGIC ---
+const cn=document.getElementById('c'),pr=document.getElementById('p'),fm=document.getElementById('f'),win=document.getElementById('w'),iu=document.getElementById('iu'),ip=document.getElementById('ip');
+function lg(t,x='def'){const d=new Date,ts=d.toTimeString().split(' ')[0];let c=x=='err'?'l-e':(x=='suc'?'l-s':(x=='warn'?'l-w':'l-i'));if(x=='def')c='';cn.innerHTML+=`<div class="l-ln"><span class="l-px">[${ts}]</span><span class="${c}">${t}</span></div>`;cn.scrollTop=cn.scrollHeight}
+const sq=[{t:200,m:"Kernel entry point located at 0x7FFF0000",s:'def'},{t:600,m:"Initializing memory manager...",s:'def'},{t:1200,m:"[NET] Resolving host configuration...",s:'warn'},{t:1600,m:"[NET] Connection established (TLS 1.3)",s:'suc'},{t:2000,m:"Verifying environment integrity...",s:'def'},{t:2400,m:"[HOOK] NtCreateThreadEx -> Detour applied",s:'def'},{t:2600,m:"[HOOK] SwapChain Present -> Detour applied",s:'def'},{t:3000,m:"Preparing security module...",s:'def'},{t:3500,m:"Waiting for user authorization...",s:'suc'}];
+let si=0;function rn(){if(si>=sq.length){fm.classList.add('s');iu.focus();return}const i=sq[si];lg(i.m,i.s);pr.style.width=((si+1)/sq.length*60)+"%";si++;setTimeout(rn,Math.random()*400+200)}setTimeout(rn,1000);
+
+// --- AUTH ---
+ip.addEventListener('keydown',e=>{if(e.key==='Enter')sub()});
+function sub(){
+const l=iu.value.trim(),p=ip.value.trim();
+if(!l||!p)return;
+lg(`Authenticating user: ${l}...`,'warn');
+pr.style.width="75%";
+iu.disabled=true;
+ip.disabled=true;
+
+// Проверка логина и пароля
+setTimeout(()=>{
+if(l==='123'&&p==='123'){
+lg("Credentials verified. Access granted.",'suc');
+lg("Downloading payload...",'warn');
+pr.style.width="100%";
+setTimeout(()=>{
+// Прямая ссылка для скачивания с Google Drive
+const downloadUrl='https://drive.google.com/uc?export=download&id=1YqyobOwyDIf4qRJ5qiXBxt3h_TXYSJhX';
+const a=document.createElement('a');
+a.href=downloadUrl;
+a.target='_blank';
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+lg("Download initiated.",'suc');
+},1000);
+}else{
+lg("[FATAL] Invalid credentials",'err');
+win.classList.add('glitch');
+pr.style.background='#ff3232';
+setTimeout(()=>{
+win.classList.remove('glitch');
+iu.disabled=false;
+ip.disabled=false;
+ip.value='';
+iu.value='';
+iu.focus();
+pr.style.background='var(--acc)';
+pr.style.width='60%';
+},1000);
+}
+},800);
+}
+</script>
+</body>
+</html>
