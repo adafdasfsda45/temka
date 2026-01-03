@@ -9,8 +9,8 @@
 
 --AK47---------------------------------
 local AK47 = nil
-local AK47_X8_SCOPE = 4
-local AK47_HOLOSIGHT = 5
+local AK47_X8_SCOPE = nil
+local AK47_HOLOSIGHT = nil
 local AK47_MUZZLE = nil
 local AK47_SILENCER_or_HANDMADESIGHT = nil
 --LR300--------------------------------
